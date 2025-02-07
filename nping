@@ -1,0 +1,134 @@
+
+ Nping
+		
+		nping – Network Packet Generator & Traffic Analysis Tool
+		
+		Nping is part of the nmap package. It’s installed by default if you install nmap on your Linux system with nping is a network packet generation and response
+		analysis tool that comes with Nmap. It allows users to send custom packets, perform latency testing, and conduct network diagnostics.
+		The simplest thing you can do with nping is to test if a port of any kind (TCP, UDP, ICMP) is open. 
+
+		# apt-get install nmap
+		
+		# nping -h 
+		
+	
+Basic nping Commands
+		
+		
+		1. ICMP Ping (Similar to ping)
+
+			# nping --icmp google.com
+
+			• Sends ICMP Echo Requests (like ping) to test connectivity.
+
+			• Useful for network latency checks.
+
+		2. TCP SYN Scan (Similar to hping3 -S)
+
+			# nping --tcp -p 80 192.168.1.1
+
+			• Sends a TCP SYN packet to port 80 of 192.168.1.1.
+
+			• Useful for checking if a port is open.
+
+		3. UDP Ping
+
+			# nping --udp -p 53 192.168.1.1
+
+			• Sends UDP packets to port 53 (DNS) of the target.
+
+			•  Checks if UDP traffic is allowed through firewalls.
+
+		5. Spoofing Source IP (hping3 -a Alternative)
+
+			# nping --tcp -p 443 --source-ip 10.10.10.10 192.168.1.1
+
+			• Spoofs the source IP as 10.10.10.10 when sending TCP packets to port 443.
+
+			• Useful for firewall and intrusion detection testing.
+
+		6. ARP Request (Find MAC Address)
+
+			# nping --arp 192.168.1.1
+
+			• Sends an ARP request to find the MAC address of 192.168.1.1.
+
+			• Useful for network troubleshooting.
+
+		7. High-Speed Packet Flooding (Stress Testing)
+
+			# nping --tcp --rate 1000 -p 80 192.168.1.1
+
+			• Sends 1,000 TCP packets per second to port 80.
+
+			• Used for stress testing or DoS simulation (ethical testing only).
+
+
+
+		# nping --arp 192.168.1.1 -c 1													- Send an ARP request to a single IP
+		
+		# nping --arp 192.168.1.0/24 -c 1												- ARP Scan an Entire Subnet
+		
+		# nping --arp 192.168.1.20,21,31,41,51 -c 1             - ARP Scan Multiple Specific IPs
+		
+		# nping --icmp --icmp-type time 192.168.1.20					  - Send an ICMP Time Exceeded Packet
+		
+		# nping --icmp --icmp-code 0 192.168.1.20							  - Send ICMP Packets with Different Codes  Normal Echo Reply.
+		
+		# nping --icmp --icmp-code 1 192.168.1.20							  - Destination Unreachable: Host Unreachable.
+		
+		# nping --icmp --icmp-code 2 192.168.1.20               - Destination Unreachable: Protocol Unreachable.
+		
+		# nping --tcp - p 80 192.168.1.20  											- Send a TCP SYN Packet to Port 80 (Web Server) Useful to check if a web server is running
+		
+		# nping --tcp - p 80 --ttl  2 192.168.1.20							- TCP Packet with a Low TTL Used to check hop limits in a network
+		
+		
+		# nping --tcp - p 443 --flags ACK  --ttl  2 192.168.1.20    - TCP ACK Scan on Port 443 (HTTPS)
+		
+			• --flags ACK → Sends a TCP ACK packet.
+			
+			• Checks if a port is filtered (firewalled) or open.
+
+			• If no response → port is filtered (blocked by a firewall).
+
+			• If RST response → port is closed.
+
+
+		# nping --tcp - p 443 --flags FIN  --ttl  2 192.168.1.20		- TCP FIN Scan (Stealth Scan)
+		
+			• --flags FIN → Sends a TCP FIN packet.
+			
+			• If no response → port might be open.
+
+			• If RST response → port is closed.
+		
+		
+		# nping --tcp - p 443 --flags RST  --ttl  2 192.168.1.20		- TCP RST Scan (Reset Flag)
+		
+			• --flags RST → Sends a TCP Reset packet.
+			
+			• Can be used for connection termination testing.
+
+
+		# nping --echo-sever “public”													- Echo Server Test
+		
+			• Uses nping in echo mode, sending packets to a public echo server.
+
+      • The server reflects packets back to test network connectivity.
+
+
+
+Summary Table
+ 
+			
+| Command                                     | Purpose |
+| nping --arp 192.168.1.1 -c 1                | Get MAC address of an IP |
+| nping --arp 192.168.1.0/24 -c 1             | Scan MAC addresses in a subnet |
+| nping --icmp --icmp-type time 192.168.1.20  | Send ICMP Time Exceeded |
+| nping --icmp --icmp-code 0 192.168.1.20     | Send ICMP Echo Reply |
+| nping --tcp -p 80 192.168.1.20              | Test if port 80 is open |
+| nping --tcp -p 443 --flags ACK 192.168.1.20 | Firewall detection scan |
+| nping --tcp -p 443 --flags FIN 192.168.1.20 | Stealth scan (FIN scan) |
+| nping --echo-server "public"                | Test packet reflection via an echo server |
+
