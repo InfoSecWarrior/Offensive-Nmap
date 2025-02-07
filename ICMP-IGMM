@@ -1,0 +1,215 @@
+Internet Control Message Protocol (ICMP)
+
+	Internet Control Message Protocol is known as ICMP. The protocol is at the network layer. It is mostly utilized on network equipment like routers and is utilized for error handling at 
+	the network layer. 
+	
+	
+Uses of ICMP 
+	ICMP is used for error reporting if two devices connect over the internet and some error occurs, So, the router sends an ICMP error message to the source informing about the error.
+	For Example, whenever a device sends any message which is large enough for the receiver, in that case, the receiver will drop the message and reply to the ICMP message to the
+	source.
+
+	Another important use of ICMP protocol is used to perform network diagnosis by making use of traceroute and ping utility.
+			
+			Traceroute: Traceroute utility is used to know the route between two devices connected over the internet. It routes the journey from one router to another, and a traceroute 
+									 is performed to check network issues before data transfer. 
+									
+			Ping: Ping is a simple kind of traceroute known as the echo-request message, it is used to measure the time taken by data to reach the destination and return to the source, 
+						these replies are known as echo-replies messages.
+
+
+Common message types are as follows:
+	
+		• Type 0 – Echo reply
+		
+		• Type 3 – Destination unreachable
+
+		• Type 5 – Redirect Message
+
+		• Type 8 – Echo Request
+
+		• Type 11 – Time Exceeded
+
+		• Type 12 – Parameter problem
+
+	
+	Advantage of ICMP
+		
+		• Error Reporting: ICMP conveys information to the participating network devices regarding the problems taking place, like unreachable destinations, etc.
+		• Diagnostic Tools: They assist in diagnosing network connectivity and performance issues, for example `ping` and `traceroute`.
+		• Network Management: ICMP helps in network traffic management by providing feedback on the network conditions and problems.
+
+
+	Disadvantages of ICMP
+
+		• Security Risks: An upcoming network attacker is able to take advantage of ICMP in processing an attack on the network, such as ping floods and denial-of-service (DoS) attacks.
+		• Limited Scope: ICMP is basically a network diagnosis and error reporting protocol. There is a lack of support for a lot of upper-level functions in network communication.
+		• Potential for Misuse: It very easily can be used for reconnaissance to gather information on network structure and hosts to be used in assessing networks for potential attack.
+
+
+
+
+	 Is ICMP the same as ping?
+		ICMP and ping are two different things, but they are somehow related. ICMP is a protocol that manages the messages between the devices and Ping is produced using ICMP.
+
+
+	 How does ICMP ping work?
+		ICMP ping is a way to check whether there is a connection established between two devices on the internet. We can check packet loss or any delay that happens within the network with the help of ICMP ping.
+
+
+	 What is the role of ICMP in IPv6?
+		ICMPv6 is utilized in IPv6 for more than only fault reporting and signaling, it is used for: Neighbor Discovery, which functions similarly to ARP in IPv4. Multicast address management and host configuration are handled by the Router Discovery function.
+
+
+	 ICMP is operate at which layer?
+		ICMP is operated at Network Layer of the OSI Model.
+
+
+
+Internet Group Message Protocol (IGMP )
+
+	IGMP is an acronym for Internet Group Management Protocol. IGMP is a communication protocol used by hosts and adjacent routers( Adjacent routers are routers that are directly connected to each other and exchange routing information) for multicasting communication with IP networks and uses the resources efficiently to transmit the message/data packets. Multicast communication can have single or multiple senders and receivers and thus, IGMP can be used in streaming videos, gaming, or web conferencing tools. This protocol is used on IPv4 networks and for using this on IPv6, multicasting is managed by Multicast Listener Discovery (MLD).
+	
+	#2
+	IGMP, which stands for Internet Group Management Protocol, supports multicast group memberships in an IP network. It specifically allows hosts to report their membership in
+	multicast groups to a local router in an effort to ensure that multicast traffic is only delivered to interested parties.
+
+	
+	What Types of IGMP Messages Are There?
+		The IGMP uses several types of messages to manage multicast group memberships:
+
+		• IGMP Membership Query: The Sent by routers to determine which multicast groups have members on a particular network segment. This query helps routers maintain accurate
+		   multicast group membership information.
+		• IGMP Membership Report: Sent by hosts to indicate their interest in joining a multicast group. This report informs the router of the presence of a host that wants to receive
+		   multicast traffic.
+		• IGMP Leave Group: Sent by hosts to indicate that they are leaving a multicast group. This message informs the router that the host no longer wants to receive traffic for that group.
+		• IGMP V3 Membership Report (in IGMPv3): This allows hosts to specify the exact multicast group addresses they want to join or leave and can include source-specific multicast
+		   (SSM) information.
+
+
+	Advantages of IGMP
+		• Efficient Multicast Distribution: The use of IGMP enables the distribution of multicast data to be done efficiently as it manages group memberships and ensures that the multicast
+		   traffic is sent only to the hosts that are interested.
+		• Scalability: Where large multicast groups are required, it can be applied effectively for applications such as streaming media or online gaming.
+		• Reduces Traffic: Network traffic lessens due to the fact that multicast data is sent to hosts pretending they are interested.
+
+	Disadvantage of IGMP
+		• Local Area Network Only: IGMP works within a local area network segment and doesn’t control multicast traffic between local area network segments or the internet.
+		• Complex Configuration: This can make the managing of multicast groups and getting the IGMP configuration right particularly complex in large networks.
+		• Resource Consumption: Multicast traffic consumes much bandwidth and other resources, potentially impacting network performance if not well managed
+
+
+	Why is IGMP Necessary?
+		IGMP is necessary to manage multicast group memberships in an IP network. It allows routers to determine which hosts belong to specific multicast groups and ensures that
+		multicast traffic is only sent to those hosts interested in receiving it. This helps reduce network congestion.
+
+	How Does IGMP Work?
+		IGMP works by enabling hosts to send messages to routers indicating their interest in joining or leaving specific multicast groups. Routers use this information to forward multicast
+		traffic only to the hosts that have joined a particular group.
+
+
+	Which of the following are differences between the ICMP and IGMP protocols?
+	 	ICMP is used for error reporting and network diagnostics, whereas IGMP handles multicast group memberships for efficient distribution of data.
+
+	Which of the following would be used for network diagnostics?
+		ICMP is used for network diagnostics in that it provides support to tools such as `ping` and `traceroute`.
+
+	Can ICMP and IGMP be used together?
+	   Yes, they can coexist since they are for totally different purposes: ICMP is used for network errors and diagnostics, and IGMP for multicast traffic management.
+
+	Does ICMP handle multicast traffic?
+		No, ICMP does not deal with multicast traffic. It is IGMP who takes charge of the multicast group membership.
+
+	Is IGMP used for troubleshooting network issues?
+		No, IGMP is not used for troubleshooting. It manages multicast group memberships to optimize the distribution of multicast data.
+
+	Can IGMP be used across different network segments?
+		No, IGMP is propagated only on the local network segment. Protocols like PIM (Protocol Independent Multicast) will be used for multicast traffic across different segments.
+
+
+
+
+Address Resolution Protocol (ARP)
+
+	The Address Resolution Protocol (ARP) is a network protocol used to map an IP address to a MAC (Media Access Control) address within a local network. It operates at
+	the Data Link Layer (Layer 2) of the OSI Model but relies on Layer 3 information (IP addresses).
+
+	Key Features of ARP:
+		1. Purpose: Converts an IP address (used by the Network Layer) into a MAC address (used by the Data Link Layer).
+		2. Scope: Works only within a local network (LAN); it cannot cross routers.
+		3. Type of Communication: Uses broadcast and unicast mechanisms.
+		4. Operation:
+			• When a device wants to communicate with another device in the same network, it sends an ARP request (broadcast).
+			• The device with the matching IP address responds with its MAC address (unicast).
+
+
+	Types of ARP:
+		• ARP Request: Broadcast message sent to ask, "Who has this IP address? Tell me your MAC address."
+		• ARP Reply: Response sent back with the MAC address of the requested IP.
+		• Gratuitous ARP: Sent to update other devices about changes in IP-MAC mappings (e.g., during IP reassignment).
+		• Reverse ARP (RARP): Used to find an IP address when a device knows only its MAC address (rarely used today).
+
+
+	Example:
+		If a computer with IP 192.168.1.10 wants to communicate with 192.168.1.20, it:
+		1. Broadcasts an ARP request: "Who has 192.168.1.20? Tell 192.168.1.10."
+		2. The device with IP 192.168.1.20 responds: "192.168.1.20 is at MAC address XX:XX:XX:XX:XX:XX."
+
+	Common ARP Issues:
+		• ARP Spoofing/Poisoning: An attacker can send fake ARP responses to intercept or redirect network traffic.
+		• Cache Overflow: Too many ARP entries can overwhelm a device's ARP cache.
+
+
+ ICMP message types and their associated codes
+	
+	Here are some common ICMP message types and their associated codes:
+	
+	1. Type 0 (Echo Reply)
+		
+		Code 0: Normal reply to an ICMP Echo Request (ping).
+
+
+	2. Type 3 (Destination Unreachable)
+		
+		• Code 0: Network unreachable.
+		• Code 1: Host unreachable.
+		• Code 2: Protocol unreachable.
+		• Code 3: Port unreachable.
+		• Code 4: Fragmentation needed, but DF (Don't Fragment) bit is set.
+		• Code 5: Source route failed.
+		• Code 6: Destination network unknown.
+		• Code 7: Destination host unknown.
+		• Code 8: Source host isolated.
+		• Code 9: Network administratively prohibited.
+		• Code 10: Host administratively prohibited.
+		• Code 11: Network unreachable for Type of Service.
+		• Code 12: Host unreachable for Type of Service.
+
+	3. Type 4 (Source Quench)
+		
+		• Code 0: Source quench request, indicating the sender should slow down the transmission rate.
+
+	4. Type 5 (Redirect)
+	
+		• Code 0: Redirect Datagram for the Network.
+		• Code 1: Redirect Datagram for the Host.
+		• Code 2: Redirect Datagram for the ToS and Network.
+		• Code 3: Redirect Datagram for the ToS and Host.
+
+	5. Type 8 (Echo Request)
+		
+		• Code 0: Standard Echo Request message (ping).
+
+	6. Type 11 (Time Exceeded)
+		
+		• Code 0: Time-to-live (TTL) exceeded in transit (commonly caused by routing loops).
+		• Code 1: Fragment reassembly time exceeded.
+
+	7. Type 12 (Parameter Problem)
+		
+		• Code 0: Pointer indicates the error.
+		• Code 1: Missing a required option.
+		• Code 2: Bad length.
+
+	ICMP codes, when paired with the appropriate type, give network administrators insight into the issues occurring within the network.
+
