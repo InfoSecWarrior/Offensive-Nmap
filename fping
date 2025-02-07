@@ -1,0 +1,136 @@
+
+fping
+
+	The fping command is a utility designed to send ICMP echo requests (ping) to multiple hosts in parallel, making it faster than the standard ping command when
+	 scanning a large number of IPs.
+	
+	The only difference between ping and fping is the data packet. 
+	
+	fping Commands and Usage
+		
+		• fping -h → Displays the help menu.
+
+		• fping 192.168.1.22 → Pings the specified IP address.
+
+		• fping google.com → Pings a domain name (resolves and sends ICMP echo requests).
+
+		• fping -4 google.com → Uses IPv4 only, forcing the ping to IPv4 addresses.
+
+		• fping -6 google.com → Uses IPv6 only, forcing the ping to IPv6 addresses.
+
+
+	Pinging Multiple IPs
+		
+		You can specify multiple IP addresses in a single command:
+
+		# fping 192.168.1.21 192.168.1.22 192.168.1.23 192.168.1.24 192.168.1.25
+
+
+	Pinging IPs from a File
+		
+		To read a list of target IP addresses from a file:
+
+		1. Create a file with IP addresses:
+			
+			# vim target_IP.txt
+
+			Add private or public IPs, one per line, then save the file.
+
+		2. Run fping with the file:
+		
+			# fping -f target_IP.txt
+
+		3. Show only live (responsive) hosts:
+		
+			# fping -a -f target_IP.txt
+
+			-a (or --alive) filters and displays only the reachable targets.
+
+
+	Redirecting Errors
+	
+		To suppress error messages and display only live hosts:
+
+		# fping -a -f target_IP.txt 2>/dev/null
+
+		This redirects error messages to /dev/null, keeping the output clean.
+
+      
+   Count the number of pings per target
+   	
+   	    # fping -c 3 google.com  ( This sends 3 pings and prints statistics.) 
+   
+ 
+   Interval Between Pings (Milliseconds)
+
+	  # fping -p 500 -c 5 google.com  ( Sends 5 pings with a 500ms interval between them)
+	
+
+	Fast Mode (More Aggressive Probing)
+	
+		# fping -i 1 -t 50 -r 0 -c 5 google.com
+
+		• -i 1 → Interval between pings is 1ms.
+		
+		• -t 50 → Timeout for each ping is 50ms.
+
+		• -r 0 → No retries.
+
+		• -c 5 → Send 5 pings.
+
+	
+	 Report Unreachable Hosts
+
+		# fping -u -f target_IP.txt ( Shows only the targets that are unreachable. )
+
+	  
+	Adjust TTL (Time to Live)
+
+		# fping -T 64 google.com  ( Sets TTL to 64 )
+
+	grep alive fping_output.txt
+		
+		# cat fping_output.txt | grep alive
+        
+        or , # grep alive fping_output.txt
+	
+		# grep alive fping_output.txt | cut -d ' ' -f 1
+		
+		This command is useful for extracting only the alive IPs from an fping output.
+		
+	command efficiently scans a subnet, logs only reachable hosts, and suppresses error messages.
+	
+
+		# fping -g 192.168.1.0/24 -a > liveip.txt 2> /dev/null
+		
+		
+		1. fping -g 192.168.1.0/24
+		
+			• -g (or --generate) → Generates a list of all IPs in the given subnet (192.168.1.0/24, which includes 192.168.1.1 to 192.168.1.254).
+
+			• Sends ICMP echo requests to all IPs in that range.
+
+		2. -a
+			
+			• Filters and shows only the hosts that are alive (responsive).
+
+		3. > liveip.txt
+			
+			• Redirects the output (alive IPs) to liveip.txt.
+
+		4. 2> /dev/null
+			
+			• Redirects error messages (stderr) to /dev/null (discarding them).
+
+			•This prevents unreachable host messages from being displayed or saved.
+
+	
+	Resolves and displays hostnames instead of just showing IP addresses.
+	
+		# fping -g 192.168.1.0/24 -n
+		
+		# fping -n -f ip.txt 
+		        
+         If the hostname resolution fails, it will still display the IP.
+         
+         
