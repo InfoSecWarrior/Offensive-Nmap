@@ -127,7 +127,7 @@ file nmap-output.nmap
 ```bash
 file nmap-output.xml
 ```
-
+Checking that the files created by nmap are which types of file by `file` command.
 ---
 
 ### Save nmap output in script kiddies form | ( `-oS` )
