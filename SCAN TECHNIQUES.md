@@ -480,7 +480,7 @@ The `--scanflags` option in Nmap allows you to manually specify custom TCP flags
 Normally, Nmap uses predefined scan types like SYN scan ( -sS ), FIN scan (-sF), or Xmas scan ( -sX ), However, with `--scanflags`, you can manually define which TCP flags should be set in the probe packets.
 
 ```bash
-nmap -v -p 80 **--scanflags=SYN** 192.168.1.207
+nmap -v -p 80 --scanflags=SYN 192.168.1.207
 ```
 
 Scanning **port 80** using a **custom SYN flag**, similar to a **SYN scan (`-sS`)**, but manually set.
@@ -492,7 +492,7 @@ Scanning **port 80** using a **custom SYN flag**, similar to a **SYN scan (`-sS`
 RST Scan ( **`--scanflags=RST`** )
 
 ```bash
-nmap -v -p 80 **--scanflags=RST** 192.168.1.207
+nmap -v -p 80 --scanflags=RST 192.168.1.207
 ```
 
 scanning port 80 by custom RST flag.
@@ -505,7 +505,7 @@ Uncommon and usually ineffective.
 ACK Scan ( **`--scanflags=ACK`** )
 
 ```bash
-nmap -v -p 80 **--scanflags=ACK** 192.168.1.207
+nmap -v -p 80 --scanflags=ACK 192.168.1.207
 ```
 
 scanning port 80 by custom FIN flag.
@@ -696,9 +696,9 @@ The SCTP INIT Scan ( **`-sY` )** is a specialized scanning technique used to ide
 - The server responds with an INIT-ACK, indicating the port is open.
 - The client does not proceed further, preventing a full SCTP association.
     
-    Client                       INIT           →     Server
+    Client             INIT       →     Server
     
-    Client                 ←   INIT-ACK           Server
+    Client        ←   INIT-ACK          Server
     
 
 **Closed Port :**
@@ -706,7 +706,7 @@ The SCTP INIT Scan ( **`-sY` )** is a specialized scanning technique used to ide
 - The client sends an SCTP INIT packet.
 - The server responds with an ABORT, indicating no service is listening on that port.
     
-    Client                INIT        →     Server
+    Client              INIT       →     Server
     
     Client          ←   ABORT            Server
     
@@ -905,15 +905,15 @@ The FTP Bounce attack is an old vulnerability, and most modern FTP servers disab
 - Bypassing IP-based access control restrictions in firewalled environments.
 
 ```bash
-nmap -b anonymous@ftp.example.com -p 21,22,80 192.168.1.207
+nmap -Pn -b anonymous@ftp.example.com -p 21,22,80 192.168.1.207
 ```
 
 ```bash
-nmap -b user:pass@ftp.example.com -p 1-1000 192.168.1.207
+nmap -Pn -b user:pass@ftp.example.com -p 1-1000 192.168.1.207
 ```
 
 ```bash
-nmap -b anonymous@ftp.example.com -p 21,22,80 target.com
+nmap -Pn -b anonymous@ftp.example.com -p 21,22,80 target.com
 ```
 
 ---
@@ -1009,11 +1009,11 @@ Find a Suitable Zombie Host:
 - Using internal poorly configured hosts to scan restricted networks.
 
 ```bash
-nmap -sI 192.168.1.100 192.168.1.207
+nmap -Pn -sI 192.168.1.100 192.168.1.207
 ```
 
 ```bash
-nmap -sI zombie.example.com -p 80 target.com
+nmap -Pn -sI zombie.example.com -p 80 target.com
 ```
 
 ```bash
