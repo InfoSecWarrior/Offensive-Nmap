@@ -1,11 +1,11 @@
 ### Download
 
 ```bash
-# apt install nmap
+apt install nmap
 ```
 
 ```bash
-# dnf install nmap
+dnf install nmap
 ```
 
 Download For Unix Platforms ( Solaris, Free/Net/OpenBSD etc. )
@@ -21,35 +21,35 @@ make install
 
 
 ```bash
-# nmap --help
+nmap --help
 ```
 
 ```bash
-# nmap -h
+nmap -h
 ```
 
 ```bash
-# nmap 192.168.1.1
+nmap 192.168.1.1
 ```
 
 ```bash
-# nmap --version
+nmap --version
 ```
 
 ```bash
-# nmap -V
+nmap -V
 ```
 
 ```bash
-# nmap 64.6.64.6
+nmap 64.6.64.6
 ```
 
 https://scanme.nmap.org/          →     Official website of nmap for testing.
 
 ```bash
-# nmap scanme.nmap.org
+nmap scanme.nmap.org
 ```
 
 ```bash
-# nmap -v scanme.nmap.org
+nmap -v scanme.nmap.org
 ```
