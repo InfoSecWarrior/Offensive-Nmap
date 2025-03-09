@@ -39,3 +39,5 @@ nmap -v -sS -p 23 192.168.1.27
 - Effective for quiet scanning when trying to identify open ports without triggering firewall alerts.
 - Useful for reconnaissance before launching further penetration testing techniques.
 - Preferred when scanning hardened targets with logging and detection mechanisms in place.
+
+---
