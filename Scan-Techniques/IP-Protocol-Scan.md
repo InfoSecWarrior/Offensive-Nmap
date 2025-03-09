@@ -23,9 +23,9 @@ The IP Protocol Scan (`-sO`) is a specialized scanning technique that detects wh
 - The client sends an IP packet with a specific protocol number (e.g., ICMP, TCP, UDP).
 - The server responds appropriately, confirming that the protocol is supported.
     
-    Client                 IP Protocol                          →     Server
+    Client               IP Protocol                 →     Server
     
-    Client           ←   Response (valid protocol)           Server
+    Client           ←   Response (valid protocol)         Server
     
 
 **Closed Protocol:**
@@ -33,7 +33,7 @@ The IP Protocol Scan (`-sO`) is a specialized scanning technique that detects wh
 - The client sends an IP packet with a specific protocol number.
 - The server responds with an **ICMP Protocol Unreachable (Type 3, Code 2)** message, indicating that the protocol is not supported.
     
-    Client                 IP Protocol                              →     Server
+    Client                 IP Protocol                 →     Server
     
     Client           ←   ICMP Protocol Unreachable           Server
     
@@ -45,7 +45,7 @@ The IP Protocol Scan (`-sO`) is a specialized scanning technique that detects wh
     
     Client                    IP Protocol      →     Server
     
-                                 no-response
+     no-response
     
 
 **Advantages of IP Protocol Scan (`-sO`)**
