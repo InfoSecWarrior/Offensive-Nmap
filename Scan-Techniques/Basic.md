@@ -29,3 +29,26 @@ By default, **Nmap chooses the scan type based on user privileges**:
 - Faster and harder to detect in logs because connections remain half-open.
 
 ---
+
+### Comparison: FIN Scan vs. Null Scan vs. Xmas Scan
+
+| **Scan Type** | **Flags Sent** | **Open Port Response** | **Close Port Response** | **Works on Windows?** | **Stealth Level** |
+| --- | --- | --- | --- | --- | --- |
+| FIN Scan ( -sF ) | FIN | No response | RST/ACK | No | High |
+| Null Scan ( -sN ) | No Flags | No response | RST/ACK | No | High |
+| Xmas Scan ( -sX ) | FIN, PSH, URG | No response | RST/ACK | No | High |
+
+---
+
+### **Comparison of Stealth Scans in Nmap**
+
+| **Scan Type** | **Flags Sent** | **Open Port Response** | **Closed Port Response** | **Works on Windows?** | **Stealth Level** | **Best Used For** |
+| --- | --- | --- | --- | --- | --- | --- |
+| **SYN Scan (`-sS`)** | SYN | SYN/ACK (half-open) | RST | Yes | High | Fast & stealthy scans |
+| **FIN Scan (`-sF`)** | FIN | No response | RST/ACK | No | High | Bypassing SYN filters |
+| **Null Scan (`-sN`)** | No Flags | No response | RST/ACK | No | High | Evading firewalls & IDS |
+| **Xmas Scan (`-sX`)** | FIN, PSH, URG | No response | RST/ACK | No | High | Firewall evasion |
+| **ACK Scan (`-sA`)** | ACK | No response (filtered) | RST (unfiltered) | Yes | Medium | Checking firewall rules |
+| **Maimon Scan (`-sM`)** | FIN + ACK | No response | RST | No | High | Bypassing firewalls |
+
+---
