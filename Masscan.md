@@ -1,3 +1,5 @@
+#Masscan
+
 Masscan is a high-speed network scanner that can scan the entire internet in under 6 minutes. It is similar to `nmap` , but much faster, leveraging asynchronous scanning techniques.
 
 ### Installation :
