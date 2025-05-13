@@ -1,45 +1,57 @@
-### Download
+<h1 align="center">Offensive Nmap</h1>
 
-```bash
-apt install nmap
-```
-
-```bash
-dnf install nmap
-```
-
-Download For Unix Platforms ( Solaris, Free/Net/OpenBSD etc. )
-
-```bash
-bzip2 -cd nmap-*.tar.bz2 | tar xvf -
-cd nmap-*
-./configure
-make
-su root
-make install
-```
+**Offensive Nmap** is a curated repository of practical documentation, examples, and advanced usage tips focused on offensive port scanning and network reconnaissance using **Nmap** and its alternatives.
 
 
-```bash
-nmap --help
-```
 
-```bash
-nmap -h
-```
+## Getting Started
 
-```bash
-nmap 192.168.1.1
-```
+### Installation
 
-```bash
-nmap --version
-```
+- **Debian/Ubuntu-based systems:**
 
-```bash
-nmap -V
-```
+    ```bash
+    sudo apt install nmap
+    ```
 
-```bash
-nmap 64.6.64.6
-```
+- **Red Hat/Fedora-based systems:**
+
+    ```bash
+    sudo dnf install nmap
+    ```
+
+
+### Basic Usage
+
+
+- Show available options:
+
+    ```bash
+    nmap --help
+    ```
+
+- Check installed version:
+
+    ```bash
+    nmap --version
+    ```
+
+
+- Scan a single target:
+
+    ```bash
+    nmap 192.168.1.1
+    ```
+
+Explore detailed guides for each Nmap feature and technique:
+
+* [Target Specification](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Target-Specification.md)
+* [Host Discovery](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Host-Discovery.md)
+* [Scan Techniques](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Scan-Techniques.md)
+* [Script Scan (NSE)](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Script-Scan.md)
+* [Service and Version Detection](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Service-Version-Detection.md)
+* [OS Detection](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/OS-Detection.md)
+* [Output Formats](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Output.md)
+* [Port Specification and Scan Order](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Port-Specification-and-Scan-Order.md)
+* [Timing and Performance Tuning](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Timing-and-Performance.md)
+* [Firewall Evasion and Spoofing](https://github.com/InfoSecWarrior/Offensive-Nmap/blob/main/Firewall-Evasion-and-Spoofing.md)
