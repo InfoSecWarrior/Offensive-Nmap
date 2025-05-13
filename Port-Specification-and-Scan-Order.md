@@ -1,252 +1,111 @@
-```bash
-cat /usr/share/nmap/nmap-services | head -n 50
-```
+## **Port Specification and Scan Order**
 
-*Show the frequency of the used ports (how often the port is found open in real life case scenarios*
+Nmap, by default, scans the 1000 most common ports. However, customizing the ports to scan and the scan order allows more efficient and targeted reconnaissance. These options help avoid scanning irrelevant ports and can significantly speed up or fine-tune the process.
 
-Service name                  —    The name of the service typically associated with this port.
 
-Port number/protocol          —    The port number and transport protocol (TCP/UDP).
 
-Open-frequency                —    A decimal value indicating how often Nmap has observed this port open in real-world scans.
+## **Scan All 65535 Ports**
 
-Optional comments             —    Additional information about the service.
+* **Scan all TCP ports (0–65535)**
 
-**Meaning of Open-Frequency:**
+  ```
+  nmap -v -p0-65535 192.168.1.1
+  ```
 
-— It is a statical measure based on scans conducted by Nmap across a wide range of networks.
 
-— A higher value indicated that the port is commonly found open.
 
-— A lower value suggests that the port is rarely open.
+## **Scan Specific Ports**
 
----
+* **Scan a single port**
 
-### Nmap Fast Scan | ( `-F` )
+  ```
+  nmap -v -p 22 192.168.1.1
+  ```
 
-```bash
-nmap -F 192.168.1.207
-```
+* **Scan multiple specified ports**
 
--F for fast scan, scans Top Used 100 Ports.
+  ```
+  nmap -v -p 22,80,443 192.168.1.1
+  ```
 
----
+* **Scan ports using protocol-specific notation**
 
-### Scan Top most used ports | ( `--top-ports` )
+  ```
+  nmap -v -p T:80,443,U:53,111 192.168.1.1
+  ```
 
-```bash
-nmap --top-ports 10 192.168.1.207
-```
+* **Scan all ports with shorthand**
 
-‘10’ after the ‘--top-ports’ will scan the top most used 10 ports
+  ```
+  nmap -v -p- example.com
+  ```
 
-```bash
-nmap --top-ports 50 192.168.1.207
-```
 
-This will scan top most used 50 ports
 
----
+## **Exclude Specific Ports**
 
-### Custom port(s) Scanning | ( `-p` )
+* **Exclude a single port**
 
-```bash
-nmap -p 21 192.168.1.207
-```
+  ```
+  nmap -v --exclude-ports 80 example.com
+  ```
 
-This will only scan port number 21
+* **Exclude a port range**
 
-```bash
-nmap -p 21 192.168.1.207
-```
+  ```
+  nmap -v --exclude-ports 100-400 192.168.1.1/24
+  ```
 
-**Ports in CSV (comma-separated values)**
+* **Exclude multiple ranges**
 
-```bash
-nmap -p 21,22,23,25,80,443,445 192.168.1.207
-```
+  ```
+  nmap --exclude-ports 1-1000,3389-3390
+  ```
 
-This will scan the given ports in the command
 
-**Ports in Range**
 
-```bash
-nmap -p 80-800 192.168.1.207
-```
+## **Fast Scan (Top 100 Ports)**
 
-This will scan all ports between 80 to 800 including them too
+* **Scan only the top 100 most common ports**
 
-```bash
-nmap -p 21,22,23,25,80,443,445,8000-8999 192.168.1.207
-```
+  ```
+  nmap -F 192.168.1.1
+  ```
 
-This will scan the mentioned ports as well as all ports in the range of 8000 to 8999
+* **Verbose fast scan**
 
-**Scanning All ports**
+  ```
+  nmap -v -F 192.168.1.1
+  ```
 
-```bash
-nmap -p 0-65535 192.168.1.207
-```
 
-This will scan all ports including the port number ‘0’
 
-  OR
+## **Sequential Port Scan**
 
-```bash
-nmap -p - 192.168.1.207
-```
+* **Scan all ports in order instead of randomizing**
 
-  OR
+  ```
+  nmap -r -p- 192.168.1.1-10
+  ```
 
-```bash
-nmap -p- 192.168.1.207
-```
+* **Use sequential order with fast scan**
 
-### Scan TCP Ports | ( `-p T:` )
+  ```
+  nmap -v -r -F example.com
+  ```
 
-```bash
-nmap -p T:100-900 192.168.1.207
-```
 
-This will scan TCP ports from range 100 to 900
 
-### Scan UDP Ports | ( `-p U:` )
+## **Scan Top N Most Common Ports**
 
-```bash
-nmap -sU -sT -p T:100-900,U:53,69,67,68 192.168.1.207
-```
+* **Scan top 100 ports**
 
-This will scan the UDP ports entered in the command.
+  ```
+  nmap --top-ports 100 192.168.1.1/24
+  ```
 
-### Scan UDP Ports | ( `-sU:` )
+* **Scan top 100 ports on a domain**
 
-```bash
-nmap -sU 192.168.1.207
-```
-
-This will scan top 1000 most used UDP ports.
-
-```bash
-nmap -sU --top-ports 10 192.168.1.207
-```
-
-Scans 10 top most used UDP ports.
-
----
-
-### Scanning both TCP & UDP ports ( Custom )
-
-```bash
-nmap -sU -sS -p t:21,23,22,25,80,443,445,U:53,68,67 192.168.1.207
-```
-
----
-
-### Exclude Ports | ( `--exclude-ports` )
-
-**The service on port 9100/TCP is jetdirect ( printers use that )**
-
-This is used when you want to exclude some ports from being scanned e.g., Ports used by printers etc.
-
-```bash
-nmap -v -p- --exclude-ports 9100 192.168.1.105
-```
-
-This will scan all ports of the target IP except port number 9100/TCP ( This port is used by printers )
-
-```bash
-nmap -v -p- --exclude-ports 9100,515 192.168.1.105
-```
-
-```bash
-nmap -v -p- --exclude-ports 9000-9999 192.168.1.105
-```
-
-### Scanning ports by service name
-
-```bash
-nmap -v -p http 192.168.1.207
-```
-
-This will scan all ports running the ‘HTTP’ protocol.
-
-```bash
-nmap -v -p http* 192.168.1.207
-```
-
-Scanning All HTTP-related Ports with Wildcard (`http*`)
-
-```bash
-nmap -v -p ssh* 192.168.1.207
-```
-
-Scanning All SSH-related Ports with Wildcard
-
-```bash
-nmap -v -p ftp* 192.168.1.207
-```
-
-Scanning All FTP-related Ports with Wildcard
-
-```bash
-nmap -v -p *ftp 192.168.1.207
-```
-
-Scanning All Ports with Names Ending in 'FTP' (`*ftp`)
-
-```bash
-nmap -v -p *ftp* 192.168.1.207
-```
-
-Scanning All Ports with 'FTP' in Their Name (`*ftp*`)
-
----
-
-### Don’t randomize port scan | ( `-r` )
-
-**"By default, Nmap scans ports in a random order. Using the `-r` switch disables randomization, meaning the ports will be scanned in numerical order."**
-
-```bash
-nmap -v -r -p 1-10 192.168.1.207
-```
-
----
-
-### Scanning ports by ratio | ( `--port-ratio` )
-
-### `-port-ratio` Switch in Nmap
-
-The `--port-ratio` option in Nmap is used to filter and scan only those ports that are commonly open on hosts, based on statistical data. This switch is useful when you want to scan only frequently used ports instead of scanning all possible ports, which can save time and reduce network load.
-
-The `--port-ratio` option is used to filter ports based on their open-frequency ratio, which is derived from the nmap-services file.
-
-### **How It Works**
-
-- Nmap maintains statistical data on the likelihood of ports being open across different scans.
-- The `-port-ratio` switch allows you to specify a threshold (between 0.0 and 1.0), where:
-    - **`-port-ratio 0.9`** scans only ports that have at least a **90% chance** of being open.
-    - **`-port-ratio 0.5`** scans ports that have at least a **50% chance** of being open.
-    - **`-port-ratio 0.1`** scans ports that have at least a **10% chance** of being open.
-
-### **Example Usage**
-
-```bash
-nmap --port-ratio 0.8 192.168.1.207
-```
-
-- This will scan only ports that are open at least 80% of the time in Nmap's dataset.
-- It reduces unnecessary scanning of rarely open ports.
-
-### **When to Use `-port-ratio`**
-
-- When performing a **quick scan** to check only the most commonly open ports.
-- To **reduce scan time** and **network footprint** when scanning large networks.
-- When focusing on **high-probability attack surfaces** rather than scanning all 65,535 ports.
-
-```bash
-awk '$2~/udp$/' /usr/share/nmap/nmap-services | sort -r -k3 | head -n 100
-```
-
-There will be the ports with their frequency; e.g., ‘`0.060743`’
-
----
+  ```
+  nmap --top-ports 100 example.com
+  ```

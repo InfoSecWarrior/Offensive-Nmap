@@ -1,378 +1,200 @@
-# Nmap Scripting Engine (NSE) — Script Scan | (`-sC` or `--script`)
+## **Nmap Scripting Engine (NSE) — Script Scan | (`-sC` or `--script`)**
 
-The Nmap Scripting Engine (NSE) allows users to automate scanning tasks, detect vulnerabilities, and gather additional information about a target. It works by running scripts written in Lua that extend Nmap's capabilities.
+The Nmap Scripting Engine (NSE) is a powerful tool that allows users to automate scanning tasks, detect vulnerabilities, and gather additional information about a target. NSE uses Lua scripts to extend Nmap's capabilities, enabling more advanced network reconnaissance and security testing.
 
-**Syntax :**
 
-```bash
-nmap -sC <target>
-```
 
-```bash
-nmap --script <script-name> <target>
-```
+### **Basic Script Scan**
 
-```bash
-nmap --script <category> <target>
-```
+* Use the `-sC` option to run the default set of scripts for gathering basic information about the target, such as service version, OS, and security vulnerabilities.
 
-```bash
-nmap script "<expression>" <target>
-```
+  ```bash
+  nmap -sC <target>
+  ```
 
-When you use `-sC`, Nmap runs a set of default scripts that provide additional information about a target, such as:
+* Alternatively, use the `--script` option with a specific script or category:
 
-- Service detection
-- OS fingerprinting
-- SSL/TLS information
-- Basic vulnerability checks
+  ```bash
+  nmap --script <script-name> <target>
+  ```
 
-```bash
-nmap -v -Pn -sT -sV -sC -A -O -p- 192.168.1.208
-```
+  ```bash
+  nmap --script <category> <target>
+  ```
 
-**Script Categories in NSE :**
+  ```bash
+  nmap --script "<expression>" <target>
+  ```
 
-Nmap scripts are organized into different categories:
 
-| **Category** | **Description** |
-| --- | --- |
-| auth | Authentication bypass & brute-force attacks |
-| broadcast | Network discovery scripts |
-| brute | Brute-force attack scripts |
-| discovery | Identifies hosts, services, and configurations |
-| dos | Denial-of-service (DoS) testing |
-| exploit | Known vulnerability exploitation |
-| external | Uses external services (e.g., WHOIS, Shodan) |
-| fuzzer | Sends unexpected data to test robustness |
-| intrusive | May affect performance or trigger security alerts |
-| malware | Detects malware-infected hosts |
-| safe | No harmful impact on targets |
-| version | Improves service version detection |
-| vuln | Detects vulnerabilities on a target |
 
-Default is also a category
+### **Example with Multiple Options**
 
-### Locating NSE Scripts :
+* Perform a comprehensive scan using multiple options like version detection, OS fingerprinting, and the default script set:
 
-To see all available scripts :
+  ```bash
+  nmap -v -Pn -sT -sV -sC -A -O -p- 192.168.1.208
+  ```
+
+
+
+### **Script Categories in NSE**
+
+NSE scripts are organized into various categories to help streamline the scanning process. Some common categories include:
+
+| **Category** | **Description**                                   |
+|  ------------ | ------------- |
+| auth         | Authentication bypass & brute-force attacks       |
+| broadcast    | Network discovery scripts                         |
+| brute        | Brute-force attack scripts                        |
+| discovery    | Identifies hosts, services, and configurations    |
+| dos          | Denial-of-service (DoS) testing                   |
+| exploit      | Known vulnerability exploitation                  |
+| external     | Uses external services (e.g., WHOIS, Shodan)      |
+| fuzzer       | Sends unexpected data to test robustness          |
+| intrusive    | May affect performance or trigger security alerts |
+| malware      | Detects malware-infected hosts                    |
+| safe         | No harmful impact on targets                      |
+| version      | Improves service version detection                |
+| vuln         | Detects vulnerabilities on a target               |
+
+
+
+### **Locating NSE Scripts**
+
+To list all available NSE scripts:
 
 ```bash
 ls /usr/share/nmap/scripts/
 ```
 
+To count the total number of scripts:
+
 ```bash
 ls /usr/share/nmap/scripts/ | wc -l
 ```
 
-Total number of scripts
+Update the NSE script database:
 
 ```bash
 nmap --script-updatedb
 ```
 
-```bash
-ls /usr/share/nmap/scripts/ | grep .db$
-```
-
-This is the script database file of nmap
-
-```bash
-cat /usr/share/nmap/scripts/script.db
-```
-
-```bash
-cat /usr/share/nmap/scripts/script.db | cut -d "\"" -f 2 | wc -l
-```
-
-```bash
-grep smb /usr/share/nmap/scripts/script.db
-```
-
-Filtering all nmap scripts for **‘smb’**
+To filter scripts based on specific terms:
 
 ```bash
 ls /usr/share/nmap/scripts/ | grep smb
 ```
 
-Filtering all nmap scripts for **‘smb’**
+To find a specific script for a service (e.g., FTP):
 
 ```bash
 grep ftp /usr/share/nmap/scripts/script.db
 ```
 
-Filtering all nmap scripts for **‘ftp’**
-
-```bash
-ls /usr/share/nmap/scripts/ | grep ftp
-```
-
-Filtering all nmap scripts for **‘ftp’**
-
-### Filtering / Searching nmap scripts by ‘category’.
+To search for scripts by category:
 
 ```bash
 grep brute /usr/share/nmap/scripts/script.db
 ```
 
-```bash
-grep exploit /usr/share/nmap/scripts/script.db
-```
 
-```bash
-grep version /usr/share/nmap/scripts/script.db
-```
 
----
+### **Running Default Scripts (`--script=default`)**
 
-### Nmap Default Script | ( `--script=default` )
-
-Runs the default set of Nmap Scripting Engine (NSE) scripts, which provide additional information about open ports, services, and possible vulnerabilities.
+The `default` script category runs a set of essential scripts that provide additional insights about open ports, services, and potential vulnerabilities:
 
 ```bash
 nmap -v -Pn -sV -sT -A -O -p- --script=default 192.168.1.208
 ```
 
-Performs a scan using Nmap’s built-in default scripts.
+**Key Features of the Default Scripts:**
 
-Performs a scan using Nmap’s built-in default scripts.
+* Detects common vulnerabilities
+* Retrieves service versions
+* Extracts banner information
+* Performs light brute-force testing where applicable
 
-**Key Features:**
 
-- Detects common vulnerabilities
-- Retrieves service versions
-- Extracts banner information
-- Performs light brute-force testing (where applicable)
 
----
+### **Script Category Scans (`--script=<category>`)**
 
-```bash
-nmap -v -Pn -sV -sT -A -O -p- --script=default 192.168.1.208
-```
+You can use a specific script category to focus the scan on particular tasks.
 
-  OR
+* **Discovery category**:
 
-```bash
-nmap -v -Pn -sT -sV -sC -A -O -p- 192.168.1.208
-```
+  ```bash
+  nmap -v -Pn -sT -sV -A -O -p- --script=discovery 192.168.1.208
+  ```
 
----
+* **Authentication category** (checks for authentication weaknesses):
 
-**Syntaxes:**
+  ```bash
+  nmap -v -Pn -sT -sV -A -O -p- --script=auth 192.168.1.208
+  ```
 
-```bash
-nmap --script <script-name> <target>
-```
+* **Brute-force category** (attempts brute-force attacks):
 
-```bash
-nmap --script <category> <target>
-```
+  ```bash
+  nmap -v -Pn -sT -sV -A -O -p- --script=brute 192.168.1.208
+  ```
 
-```bash
-nmap --script "<expression>" <target>
-```
+* **Exploit category** (attempts known exploits):
 
----
+  ```bash
+  nmap -v -Pn -sT -sV -A -O -p- --script=exploit 192.168.1.208
+  ```
 
-**Particular (Each) scripts is applicable on particular ports, like HTTP scripts will work on 80 & 8080**
+* **Malware category** (checks for malware):
 
-**Example :**
+  ```bash
+  nmap -v -Pn -sT -sV -A -O -p- --script=malware 192.168.1.208
+  ```
 
-```bash
-cd /usr/share/nmap/scripts
-```
+* **DoS category** (checks for DoS vulnerabilities):
 
-```bash
-ls -lha | grep http
-```
+  ```bash
+  nmap -v -Pn -sT -sV -A -O -p- --script=dos 192.168.1.208
+  ```
 
-Selecting any script for example
 
-```bash
-nmap -v -Pn -sT -sV -A -O -p 80 --script=http-enum.nse 192.168.1.208
-```
 
-**Here we are using `http-enum.nse` script and on port `80`**
+### **Script Expression Scan (`--script "<expression>"`)**
 
-```bash
-nmap -v -Pn -sT -sV -A -O -p 80 --script=http-headers.nse 192.168.1.208
-```
+NSE allows for the use of Lua expressions to target specific scripts or match patterns. This feature gives flexibility when running scripts on multiple targets or filtering by keywords.
 
----
-
-### Script Category Scan | (`--script=<category>`)
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=discovery 192.168.1.208
-```
-
-Using ‘discovery’ category here
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=auth 192.168.1.208
-```
-
-Runs scripts to check for authentication weaknesses, such as:
-
-- ftp-anon — Checks for anonymous FTP login.
-- smb-brute — Attempts SMB login with brute force.
-- http-auth — Detect HTTP authentication methods.
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=default 192.168.1.208
-```
-
-Default is also a category
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=brute 192.168.1.208
-```
-
-Runs brute-force attack scripts, including:
-
-- ssh-brute — SSH password cracking.
-- ftp-brute — FTP brute-force attack.
-- http-brute — HTTP login brute-force
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=exploit 192.168.1.208
-```
-
-Runs script that exploit vulnerabilities, including:
-
-- smb-psexec — Executes commands on Windows via SMB.
-- http-shellshock — Test for Shellshock vulnerability.
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=malware 192.168.1.208
-```
-
-Runs scripts that check for malware-infected services, including:
-
-- http-malware-host — Detects if a web host is serving malware.
-- smb-vuln-conficker — Detects Conficker worm.
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=dos 192.168.1.208
-```
-
-Runs scripts that check for DoS vulnerabilities, such as:
-
-- http-slowloris — Checks for Slowloris DoS vulnerability.
-- snmp-hh3c-dos — Checks SNMP DoS vulnerability.
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=discovery 192.168.1.208
-```
-
-Runs scripts that father network and host information, such as:
-
-- snmp-brute — Brute-force SNMP community strings.
-- nbstat — Retrieves NetBIOS info.
-- dns-brute — Attempts DNS subdomain enumeration
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=vuln 192.168.1.208
-```
-
-Runs scripts that detect known vulnerabilities, including:
-
-- smb-vuln-ms-08-067 — Checks for the MS08-067 vulnerability.
-- http-shellshock — Tests for Shellshock vulnerability.
-- ssl-heartbleed — Checks for Heartbleed.
-
----
-
-```bash
-nmap -v -Pn -sT -sV -A -O -p- --script=scada 192.168.1.208
-```
-
-Runs scripts that test SCADA/ICS (Industrial Control Systems) devices, such as:
-
-- modbus-discover — Enumerates Modbus devices.
-- iec-identify — Identifies IEC 60870-5-104 SCADA devices.
-
----
-
-| **Category** | **Nmap Command** |
-| --- | --- |
-| Default Scripts | nmap --script=default 192.168.1.100 |
-| Authentication | nmap --script=auth 192.168.1.100 |
-| Vulnerability | nmap --script=vuln 192.168.1.100 |
-| Discovery | nmap --script=discovery 192.168.1.100 |
-| Web Application | nmap --script=http 192.168.1.100 |
-| Brute-Force | nmap --script=brute  192.168.1.100 |
-| Exploitation | nmap --script=exploit  192.168.1.100 |
-| Malware Detection | nmap --script=malware  192.168.1.100 |
-| DOS Testing | nmap --script=dos  192.168.1.100 |
-| SCADA/ICS | nmap --script=scada  192.168.1.100 |
-
----
-
-### Script Expression Scan | (`--script "<expression>"`)
-
-Allows you to run Nmap Scripting Engine (NSE) scripts using specific expressions, such as wildcard (`*`), Lua patterns, or logical operators. This helps target specific scripts instead of entire categories.
-
-**To run a specific script :**
+**To run a specific script**:
 
 ```bash
 nmap --script "ftp-anon" 192.168.1.208
 ```
 
-**Run multiple scripts by separating them with commas:**
+**Run multiple scripts**:
 
 ```bash
 nmap --script "ssh-brute,ftp-brute,smb-brute" 192.168.1.208
 ```
 
-**Using Wildcard (`*`) to run multiple scripts matching a pattern:**
+**Use a wildcard (`*`) to run multiple scripts matching a pattern**:
 
 ```bash
 nmap --script "http-*" 192.168.1.208
 ```
 
-**Running Scripts Based on a Keyword**
-
-```bash
-nmap --script "*smb" 192.168.1.208
-```
-
-**Running Scripts on Regular Expressions:**
+**Run scripts using regular expressions**:
 
 ```bash
 nmap --script "^(smb|ftp)-.*" 192.168.1.208
 ```
 
-**Exclude certain scripts using ! :**
-
-```bash
-nmap --script "dafault and not safe" 192.168.1.208
-```
+**Exclude certain scripts using `!`**:
 
 ```bash
 nmap --script "vuln and not http-shellshock" 192.168.1.208
 ```
 
-**Run a Custom Script File :**
+**Run a custom script**:
 
 ```bash
 nmap --script "/path/to/custom-script.nse" 192.168.1.208
 ```
-
----

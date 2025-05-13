@@ -43,13 +43,3 @@ nmap -V
 ```bash
 nmap 64.6.64.6
 ```
-
-https://scanme.nmap.org/          →     Official website of nmap for testing.
-
-```bash
-nmap scanme.nmap.org
-```
-
-```bash
-nmap -v scanme.nmap.org
-```
