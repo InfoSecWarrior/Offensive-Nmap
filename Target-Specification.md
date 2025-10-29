@@ -87,6 +87,25 @@ Target specification is a core aspect of using **Nmap** effectively. It determin
   nmap 192.168.0.0/24 --excludefile exclude.txt
   ```
 
+### **Scan a Domain's Subnet**
+
+*   Scans a network range based on a hostname's resolved IP address using CIDR notation. Nmap first resolves the hostname to an IP and then applies the subnet mask.
+
+    ```
+    nmap -v microsoft.com/24
+    ```
+
+### **Scan IPv6 addresses**
+
+*   Scans targets using IPv6 addresses. The `-6` flag can be added to force IPv6 scanning.
+
+    ```
+    nmap -v -6 2607:f8b0:4009:80c::200e
+    ```
+    ```
+    nmap -v -6 2001:db8:1234::/64
+    ```
+
 
 
 ## **Using `prips` for IP Range Generation**
